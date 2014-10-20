@@ -16,4 +16,3 @@ Android 壁紙機能の 1 つであるライブ壁紙アプリケーションです。
 スクリーンショット
 ------------------
 ![Screenshot](https://github.com/lailai/BadAppleLiveWallpaper/blob/master/screenshot.png?raw=true "Screenshot")
-T.B.D.
