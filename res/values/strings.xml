@@ -1,0 +1,13 @@
+<resources>
+
+    <string name="app_name">Bad Apple!! Live Wallpaper</string>
+    <string name="description">【東方】Bad Apple!!　ＰＶ【影絵】をAndroid用のライブ壁紙にしてみた。</string>
+    <string name="settings">設定</string>
+    <string name="aspect_title">画面サイズ</string>
+    <string name="aspect_summary">画面サイズを設定します。</string>
+    <string name="direction_title">向き</string>
+    <string name="direction_summary">向きを設定します。</string>
+    <string name="fps_title">FPS</string>
+    <string name="fps_summary">1秒当たりのフレーム数を整数値で設定します(お試し機能)。最大30まで設定できますが、そこまでのパフォーマンスはでないかもしれません。</string>
+
+</resources>
