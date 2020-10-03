@@ -292,14 +292,18 @@ class BadAppleLiveWallpaperService : WallpaperService() {
                 sharedPreferences.edit(true) { putString(PREF_KEY_FPS, "10") }
                 10
             }
-            return if (fps <= 0) {
-                sharedPreferences.edit(true) { putString(PREF_KEY_FPS, "1") }
-                1
-            } else if (fps > 30) {
-                sharedPreferences.edit(true) { putString(PREF_KEY_FPS, "30") }
-                30
-            } else {
-                fps
+            return when {
+                fps <= 0 -> {
+                    sharedPreferences.edit(true) { putString(PREF_KEY_FPS, "1") }
+                    1
+                }
+                fps > 30 -> {
+                    sharedPreferences.edit(true) { putString(PREF_KEY_FPS, "30") }
+                    30
+                }
+                else -> {
+                    fps
+                }
             }
         }
 
