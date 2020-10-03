@@ -134,10 +134,10 @@ class BadAppleLiveWallpaperService : WallpaperService() {
             val startDrawTime = System.currentTimeMillis()
 
             // 画像取得
-            val index = (((startDrawTime - start) / 100 * 100) % IMG_MAX_INDEX).toInt()
-            val bitmapIndex = String.format("%1$06d", index)
+            val index = (((startDrawTime - start) / (1000 / 30)) % IMG_MAX_INDEX).toInt()
+            val bitmapIndex = String.format("%1$04d", index)
             val bitmap = try {
-                resources.assets.open("bad_apple_img/badapple_000$bitmapIndex.jpg").use {
+                resources.assets.open("bad_apple_img/bad_apple_$bitmapIndex.jpg").use {
                     BitmapFactory.decodeStream(it)
                 }
             } catch (e: IOException) {
@@ -149,9 +149,10 @@ class BadAppleLiveWallpaperService : WallpaperService() {
             }
 
             // 画像描画
-            val canvas = surfaceHolder.lockCanvas()
-            drawBitmap(bitmap, canvas)
-            surfaceHolder.unlockCanvasAndPost(canvas)
+            surfaceHolder.lockCanvas()?.let {
+                drawBitmap(bitmap, it)
+                surfaceHolder.unlockCanvasAndPost(it)
+            }
 
             val endDrawTime = System.currentTimeMillis()
             val delay = max(1000L / fps - (endDrawTime - startDrawTime), 10L)
@@ -166,7 +167,7 @@ class BadAppleLiveWallpaperService : WallpaperService() {
                     when (aspect) {
                         ASPECT_WIDTH -> {
                             val frameWidth = width
-                            val frameHeight = width * 384 / 512
+                            val frameHeight = width * bitmap.height / bitmap.width
                             canvas.drawColor(Color.BLACK)
                             canvas.drawBitmap(
                                 bitmap,
@@ -175,13 +176,13 @@ class BadAppleLiveWallpaperService : WallpaperService() {
                                     0,
                                     (height - frameHeight) / 2,
                                     frameWidth,
-                                    frameWidth + (height - frameHeight) / 2
+                                    (height - frameHeight) / 2 + frameHeight
                                 ),
                                 null
                             )
                         }
                         ASPECT_HEIGHT -> {
-                            val frameWidth = height * 512 / 384
+                            val frameWidth = height * bitmap.width / bitmap.height
                             val frameHeight = height
                             canvas.drawColor(Color.BLACK)
                             canvas.drawBitmap(
@@ -190,7 +191,7 @@ class BadAppleLiveWallpaperService : WallpaperService() {
                                 Rect(
                                     (width - frameWidth) / 2,
                                     0,
-                                    frameWidth + (width - frameWidth) / 2,
+                                    (width - frameWidth) / 2 + frameWidth,
                                     frameHeight
                                 ),
                                 null
@@ -218,12 +219,19 @@ class BadAppleLiveWallpaperService : WallpaperService() {
                     }
                 }
                 DIRECTION_LANDSCAPE -> {
-                    val rotateBitmap =
-                        Bitmap.createBitmap(bitmap, 0, 0, 512, 384, rotateMatrix, true)
+                    val rotateBitmap = Bitmap.createBitmap(
+                        bitmap,
+                        0,
+                        0,
+                        bitmap.width,
+                        bitmap.height,
+                        rotateMatrix,
+                        true
+                    )
                     when (aspect) {
                         ASPECT_WIDTH -> {
                             val frameWidth = width
-                            val frameHeight = width * 512 / 384
+                            val frameHeight = width * rotateBitmap.height / rotateBitmap.width
                             canvas.drawColor(Color.BLACK)
                             canvas.drawBitmap(
                                 rotateBitmap,
@@ -232,13 +240,13 @@ class BadAppleLiveWallpaperService : WallpaperService() {
                                     0,
                                     (height - frameHeight) / 2,
                                     frameWidth,
-                                    frameWidth + (height - frameHeight) / 2
+                                    (height - frameHeight) / 2 + frameHeight
                                 ),
                                 null
                             )
                         }
                         ASPECT_HEIGHT -> {
-                            val frameWidth = height * 384 / 512
+                            val frameWidth = height * rotateBitmap.width / rotateBitmap.height
                             val frameHeight = height
                             canvas.drawColor(Color.BLACK)
                             canvas.drawBitmap(
@@ -247,7 +255,7 @@ class BadAppleLiveWallpaperService : WallpaperService() {
                                 Rect(
                                     (width - frameWidth) / 2,
                                     0,
-                                    frameWidth + (width - frameWidth) / 2,
+                                    (width - frameWidth) / 2 + frameWidth,
                                     frameHeight
                                 ),
                                 null
@@ -285,14 +293,18 @@ class BadAppleLiveWallpaperService : WallpaperService() {
                 sharedPreferences.edit(true) { putString(PREF_KEY_FPS, "10") }
                 10
             }
-            return if (fps <= 0) {
-                sharedPreferences.edit(true) { putString(PREF_KEY_FPS, "1") }
-                1
-            } else if (fps > 30) {
-                sharedPreferences.edit(true) { putString(PREF_KEY_FPS, "30") }
-                30
-            } else {
-                fps
+            return when {
+                fps <= 0 -> {
+                    sharedPreferences.edit(true) { putString(PREF_KEY_FPS, "1") }
+                    1
+                }
+                fps > 30 -> {
+                    sharedPreferences.edit(true) { putString(PREF_KEY_FPS, "30") }
+                    30
+                }
+                else -> {
+                    fps
+                }
             }
         }
 
@@ -323,7 +335,7 @@ class BadAppleLiveWallpaperService : WallpaperService() {
 
     companion object {
         // 使用する画像の最大要素
-        private const val IMG_MAX_INDEX = 218900
+        private const val IMG_MAX_INDEX = 6574
 
         // アスペクト比設定値(横幅に合わせる)
         private const val ASPECT_WIDTH = 0
