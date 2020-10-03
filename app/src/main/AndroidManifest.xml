@@ -13,6 +13,12 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
 
+        <activity
+            android:name=".LiveWallpaperSettingsActivity"
+            android:exported="true"
+            android:label="@string/settings"
+            android:theme="@style/WallpaperSettingsTheme" />
+
         <service
             android:name=".BadAppleLiveWallpaperService"
             android:permission="android.permission.BIND_WALLPAPER">

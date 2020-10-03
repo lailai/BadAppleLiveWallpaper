@@ -31,14 +31,14 @@ class BadAppleLiveWallpaperService : WallpaperService() {
     private inner class BadAppleLiveWallpaperEngine :
         Engine(), SharedPreferences.OnSharedPreferenceChangeListener {
         // ハンドラー
-        private val handler = Handler(Looper.getMainLooper())
+        private val handler = Handler(Looper.myLooper()!!)
 
         // 描画用スレッド
         private val drawRunnable = Runnable { drawFrame() }
 
         // 共有設定
         private val sharedPreferences =
-            getSharedPreferences(SHARED_PREFS_NAME, MODE_PRIVATE).apply {
+            getSharedPreferences(Constants.SHARED_PREFS_NAME, MODE_PRIVATE).apply {
                 registerOnSharedPreferenceChangeListener(this@BadAppleLiveWallpaperEngine)
             }
 
@@ -322,15 +322,6 @@ class BadAppleLiveWallpaperService : WallpaperService() {
     }
 
     companion object {
-        // 共有設定名
-        private const val SHARED_PREFS_NAME = "BadAppleSettings"
-
-        // 使用する画像の幅
-        private const val IMG_WIDTH = 512
-
-        // 使用する画像の高さ
-        private const val IMG_HEIGHT = 384
-
         // 使用する画像の最大要素
         private const val IMG_MAX_INDEX = 218900
 

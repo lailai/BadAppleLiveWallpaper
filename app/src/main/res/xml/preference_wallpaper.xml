@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ListPreference
+        app:defaultValue="width"
+        app:entries="@array/aspect"
+        app:entryValues="@array/aspect_value"
+        app:key="net.lailai.android.badapple.livepaper.aspect"
+        app:summary="@string/aspect_summary"
+        app:title="@string/aspect_title" />
+    <ListPreference
+        app:defaultValue="portrait"
+        app:entries="@array/direction"
+        app:entryValues="@array/direction_value"
+        app:key="net.lailai.android.badapple.livepaper.direction"
+        app:summary="@string/direction_sumary"
+        app:title="@string/direction_title" />
+    <EditTextPreference
+        app:defaultValue="10"
+        app:key="net.lailai.android.badapple.livepaper.fps"
+        app:summary="@string/fps_summary"
+        app:title="@string/fps_title" />
+</PreferenceScreen>
