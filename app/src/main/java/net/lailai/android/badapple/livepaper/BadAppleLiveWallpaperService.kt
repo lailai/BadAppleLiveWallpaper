@@ -149,9 +149,10 @@ class BadAppleLiveWallpaperService : WallpaperService() {
             }
 
             // 画像描画
-            val canvas = surfaceHolder.lockCanvas()
-            drawBitmap(bitmap, canvas)
-            surfaceHolder.unlockCanvasAndPost(canvas)
+            surfaceHolder.lockCanvas()?.let {
+                drawBitmap(bitmap, it)
+                surfaceHolder.unlockCanvasAndPost(it)
+            }
 
             val endDrawTime = System.currentTimeMillis()
             val delay = max(1000L / fps - (endDrawTime - startDrawTime), 10L)
