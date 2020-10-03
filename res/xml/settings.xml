@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
-  xmlns:android="http://schemas.android.com/apk/res/android" android:key="settings" android:title="@string/settings">
-<ListPreference android:entryValues="@array/aspect_value" android:entries="@array/aspect" android:title="@string/aspect_title" android:summary="@string/aspect_summary" android:key="net.lailai.android.badapple.livepaper.aspect" android:defaultValue="width"></ListPreference>
-<ListPreference android:title="@string/direction_title" android:summary="@string/direction_summary" android:entries="@array/direction" android:key="net.lailai.android.badapple.livepaper.direction" android:entryValues="@array/direction_value" android:defaultValue="portrait"></ListPreference>
-<EditTextPreference android:key="net.lailai.android.badapple.livepaper.fps" android:title="@string/fps_title" android:summary="@string/fps_summary" android:defaultValue="10"/>
-</PreferenceScreen>
