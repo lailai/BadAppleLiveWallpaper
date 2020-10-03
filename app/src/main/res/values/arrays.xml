@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="aspect">
+        <item>全画面に合わせる</item>
+        <item>表示画面に合わせる</item>
+        <item>横幅に合わせる</item>
+        <item>高さに合わせる</item>
+    </string-array>
+    <string-array name="aspect_value">
+        <item>full</item>
+        <item>fill</item>
+        <item>width</item>
+        <item>height</item>
+    </string-array>
+    <string-array name="direction">
+        <item>縦</item>
+        <item>横</item>
+    </string-array>
+    <string-array name="direction_value">
+        <item>portrait</item>
+        <item>landscape</item>
+    </string-array>
+</resources>
