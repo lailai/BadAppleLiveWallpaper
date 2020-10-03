@@ -166,7 +166,7 @@ class BadAppleLiveWallpaperService : WallpaperService() {
                     when (aspect) {
                         ASPECT_WIDTH -> {
                             val frameWidth = width
-                            val frameHeight = width * 360 / 480
+                            val frameHeight = width * bitmap.height / bitmap.width
                             canvas.drawColor(Color.BLACK)
                             canvas.drawBitmap(
                                 bitmap,
@@ -175,13 +175,13 @@ class BadAppleLiveWallpaperService : WallpaperService() {
                                     0,
                                     (height - frameHeight) / 2,
                                     frameWidth,
-                                    frameWidth + (height - frameHeight) / 2
+                                    (height - frameHeight) / 2 + frameHeight
                                 ),
                                 null
                             )
                         }
                         ASPECT_HEIGHT -> {
-                            val frameWidth = height * 480 / 360
+                            val frameWidth = height * bitmap.width / bitmap.height
                             val frameHeight = height
                             canvas.drawColor(Color.BLACK)
                             canvas.drawBitmap(
@@ -190,7 +190,7 @@ class BadAppleLiveWallpaperService : WallpaperService() {
                                 Rect(
                                     (width - frameWidth) / 2,
                                     0,
-                                    frameWidth + (width - frameWidth) / 2,
+                                    (width - frameWidth) / 2 + frameWidth,
                                     frameHeight
                                 ),
                                 null
@@ -218,12 +218,19 @@ class BadAppleLiveWallpaperService : WallpaperService() {
                     }
                 }
                 DIRECTION_LANDSCAPE -> {
-                    val rotateBitmap =
-                        Bitmap.createBitmap(bitmap, 0, 0, 480, 360, rotateMatrix, true)
+                    val rotateBitmap = Bitmap.createBitmap(
+                        bitmap,
+                        0,
+                        0,
+                        bitmap.width,
+                        bitmap.height,
+                        rotateMatrix,
+                        true
+                    )
                     when (aspect) {
                         ASPECT_WIDTH -> {
                             val frameWidth = width
-                            val frameHeight = width * 480 / 360
+                            val frameHeight = width * rotateBitmap.height / rotateBitmap.width
                             canvas.drawColor(Color.BLACK)
                             canvas.drawBitmap(
                                 rotateBitmap,
@@ -232,13 +239,13 @@ class BadAppleLiveWallpaperService : WallpaperService() {
                                     0,
                                     (height - frameHeight) / 2,
                                     frameWidth,
-                                    frameWidth + (height - frameHeight) / 2
+                                    (height - frameHeight) / 2 + frameHeight
                                 ),
                                 null
                             )
                         }
                         ASPECT_HEIGHT -> {
-                            val frameWidth = height * 360 / 480
+                            val frameWidth = height * rotateBitmap.width / rotateBitmap.height
                             val frameHeight = height
                             canvas.drawColor(Color.BLACK)
                             canvas.drawBitmap(
@@ -247,7 +254,7 @@ class BadAppleLiveWallpaperService : WallpaperService() {
                                 Rect(
                                     (width - frameWidth) / 2,
                                     0,
-                                    frameWidth + (width - frameWidth) / 2,
+                                    (width - frameWidth) / 2 + frameWidth,
                                     frameHeight
                                 ),
                                 null
