@@ -134,10 +134,10 @@ class BadAppleLiveWallpaperService : WallpaperService() {
             val startDrawTime = System.currentTimeMillis()
 
             // 画像取得
-            val index = (((startDrawTime - start) / 100 * 100) % IMG_MAX_INDEX).toInt()
-            val bitmapIndex = String.format("%1$06d", index)
+            val index = (((startDrawTime - start) / (1000 / 30)) % IMG_MAX_INDEX).toInt()
+            val bitmapIndex = String.format("%1$04d", index)
             val bitmap = try {
-                resources.assets.open("bad_apple_img/badapple_000$bitmapIndex.jpg").use {
+                resources.assets.open("bad_apple_img/bad_apple_$bitmapIndex.jpg").use {
                     BitmapFactory.decodeStream(it)
                 }
             } catch (e: IOException) {
@@ -166,7 +166,7 @@ class BadAppleLiveWallpaperService : WallpaperService() {
                     when (aspect) {
                         ASPECT_WIDTH -> {
                             val frameWidth = width
-                            val frameHeight = width * 384 / 512
+                            val frameHeight = width * 360 / 480
                             canvas.drawColor(Color.BLACK)
                             canvas.drawBitmap(
                                 bitmap,
@@ -181,7 +181,7 @@ class BadAppleLiveWallpaperService : WallpaperService() {
                             )
                         }
                         ASPECT_HEIGHT -> {
-                            val frameWidth = height * 512 / 384
+                            val frameWidth = height * 480 / 360
                             val frameHeight = height
                             canvas.drawColor(Color.BLACK)
                             canvas.drawBitmap(
@@ -219,11 +219,11 @@ class BadAppleLiveWallpaperService : WallpaperService() {
                 }
                 DIRECTION_LANDSCAPE -> {
                     val rotateBitmap =
-                        Bitmap.createBitmap(bitmap, 0, 0, 512, 384, rotateMatrix, true)
+                        Bitmap.createBitmap(bitmap, 0, 0, 480, 360, rotateMatrix, true)
                     when (aspect) {
                         ASPECT_WIDTH -> {
                             val frameWidth = width
-                            val frameHeight = width * 512 / 384
+                            val frameHeight = width * 480 / 360
                             canvas.drawColor(Color.BLACK)
                             canvas.drawBitmap(
                                 rotateBitmap,
@@ -238,7 +238,7 @@ class BadAppleLiveWallpaperService : WallpaperService() {
                             )
                         }
                         ASPECT_HEIGHT -> {
-                            val frameWidth = height * 384 / 512
+                            val frameWidth = height * 360 / 480
                             val frameHeight = height
                             canvas.drawColor(Color.BLACK)
                             canvas.drawBitmap(
@@ -323,7 +323,7 @@ class BadAppleLiveWallpaperService : WallpaperService() {
 
     companion object {
         // 使用する画像の最大要素
-        private const val IMG_MAX_INDEX = 218900
+        private const val IMG_MAX_INDEX = 6574
 
         // アスペクト比設定値(横幅に合わせる)
         private const val ASPECT_WIDTH = 0
