@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2020 lailai.
+ * Copyright (C) 2020-2023 lailai.
  */
 package net.lailai.android.badapple.livepaper
 
