@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2020 lailai.
+ * Copyright (C) 2020-2023 lailai.
  */
 package net.lailai.android.badapple.livepaper
 
@@ -9,6 +9,7 @@ import androidx.fragment.app.commit
 
 /**
  * ライブ壁紙設定Activity
+ * @author lailai
  */
 class LiveWallpaperSettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
