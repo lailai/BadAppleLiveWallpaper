@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2020 lailai.
+ * Copyright (C) 2011-2023 lailai.
  */
 package net.lailai.android.badapple.livepaper
 
@@ -16,16 +16,14 @@ import android.service.wallpaper.WallpaperService
 import android.view.SurfaceHolder
 import androidx.core.content.edit
 import java.io.IOException
-import java.lang.Long.max
+import kotlin.math.max
 
 /**
  * ライブ壁紙のメインクラス
  * @author lailai
  */
 class BadAppleLiveWallpaperService : WallpaperService() {
-    override fun onCreateEngine(): Engine {
-        return BadAppleLiveWallpaperEngine()
-    }
+    override fun onCreateEngine(): Engine = BadAppleLiveWallpaperEngine()
 
     // ライブ壁紙エンジン
     private inner class BadAppleLiveWallpaperEngine :
@@ -181,6 +179,7 @@ class BadAppleLiveWallpaperService : WallpaperService() {
                                 null
                             )
                         }
+
                         ASPECT_HEIGHT -> {
                             val frameWidth = height * bitmap.width / bitmap.height
                             val frameHeight = height
@@ -197,6 +196,7 @@ class BadAppleLiveWallpaperService : WallpaperService() {
                                 null
                             )
                         }
+
                         ASPECT_FULL -> {
                             val frameWidth = width * 2
                             val frameHeight = height
@@ -213,11 +213,13 @@ class BadAppleLiveWallpaperService : WallpaperService() {
                                 null
                             )
                         }
+
                         ASPECT_FILL -> {
                             canvas.drawBitmap(bitmap, null, Rect(0, 0, width, height), null)
                         }
                     }
                 }
+
                 DIRECTION_LANDSCAPE -> {
                     val rotateBitmap = Bitmap.createBitmap(
                         bitmap,
@@ -228,6 +230,7 @@ class BadAppleLiveWallpaperService : WallpaperService() {
                         rotateMatrix,
                         true
                     )
+
                     when (aspect) {
                         ASPECT_WIDTH -> {
                             val frameWidth = width
@@ -245,6 +248,7 @@ class BadAppleLiveWallpaperService : WallpaperService() {
                                 null
                             )
                         }
+
                         ASPECT_HEIGHT -> {
                             val frameWidth = height * rotateBitmap.width / rotateBitmap.height
                             val frameHeight = height
@@ -261,6 +265,7 @@ class BadAppleLiveWallpaperService : WallpaperService() {
                                 null
                             )
                         }
+
                         ASPECT_FULL -> {
                             val frameWidth = width * 2
                             val frameHeight = height
@@ -277,6 +282,7 @@ class BadAppleLiveWallpaperService : WallpaperService() {
                                 null
                             )
                         }
+
                         ASPECT_FILL -> {
                             canvas.drawBitmap(rotateBitmap, null, Rect(0, 0, width, height), null)
                         }
@@ -298,10 +304,12 @@ class BadAppleLiveWallpaperService : WallpaperService() {
                     sharedPreferences.edit(true) { putString(PREF_KEY_FPS, "1") }
                     1
                 }
+
                 fps > 30 -> {
                     sharedPreferences.edit(true) { putString(PREF_KEY_FPS, "30") }
                     30
                 }
+
                 else -> {
                     fps
                 }

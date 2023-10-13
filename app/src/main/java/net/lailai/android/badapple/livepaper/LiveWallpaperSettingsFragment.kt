@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2020 lailai.
+ * Copyright (C) 2020-2023 lailai.
  */
 package net.lailai.android.badapple.livepaper
 
@@ -8,6 +8,7 @@ import androidx.preference.PreferenceFragmentCompat
 
 /**
  * ライブ壁紙設定Fragment
+ * @author lailai
  */
 class LiveWallpaperSettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
