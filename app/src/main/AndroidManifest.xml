@@ -5,6 +5,7 @@
     <uses-feature android:name="android.software.live_wallpaper" />
 
     <application
+        android:name=".BadAppleLiveWallpaperApplication"
         android:allowBackup="true"
         android:backupInForeground="true"
         android:icon="@mipmap/ic_launcher"

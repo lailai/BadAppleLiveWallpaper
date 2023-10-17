@@ -3,7 +3,6 @@
  */
 package net.lailai.android.badapple.livepaper
 
-import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
@@ -14,7 +13,16 @@ import android.os.Handler
 import android.os.Looper
 import android.service.wallpaper.WallpaperService
 import android.view.SurfaceHolder
-import androidx.core.content.edit
+import dagger.hilt.EntryPoint
+import dagger.hilt.EntryPoints
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import java.io.IOException
 import kotlin.math.max
 
@@ -23,22 +31,28 @@ import kotlin.math.max
  * @author lailai
  */
 class BadAppleLiveWallpaperService : WallpaperService() {
+    @EntryPoint
+    @InstallIn(SingletonComponent::class)
+    interface ViewModelInterface {
+        fun getViewModel(): BadAppleLiveWallpaperViewModel
+    }
+
     override fun onCreateEngine(): Engine = BadAppleLiveWallpaperEngine()
 
     // ライブ壁紙エンジン
-    private inner class BadAppleLiveWallpaperEngine :
-        Engine(), SharedPreferences.OnSharedPreferenceChangeListener {
+    private inner class BadAppleLiveWallpaperEngine : Engine() {
+        // CoroutineScope
+        private var coroutineScope: CoroutineScope? = null
+
+        // ViewModel
+        private val vm =
+            EntryPoints.get(applicationContext, ViewModelInterface::class.java).getViewModel()
+
         // ハンドラー
         private val handler = Handler(Looper.myLooper()!!)
 
         // 描画用スレッド
         private val drawRunnable = Runnable { drawFrame() }
-
-        // 共有設定
-        private val sharedPreferences =
-            getSharedPreferences(Constants.SHARED_PREFS_NAME, MODE_PRIVATE).apply {
-                registerOnSharedPreferenceChangeListener(this@BadAppleLiveWallpaperEngine)
-            }
 
         // 画面横幅
         private var width = 0
@@ -55,20 +69,12 @@ class BadAppleLiveWallpaperService : WallpaperService() {
         // 開始時間
         private var start = 0L
 
-        // 1秒あたりの描画枚数
-        private var fps = getFps()
-
-        // アスペクト比
-        private var aspect = getAspect()
-
-        // 向き
-        private var direction = getDirection()
-
         // 回転行列
         private val rotateMatrix = Matrix().apply { postRotate(90.0f, 256.0f, 192.0f) }
 
         override fun onSurfaceCreated(holder: SurfaceHolder?) {
             super.onSurfaceCreated(holder)
+            coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
             start = System.currentTimeMillis()
         }
 
@@ -87,6 +93,8 @@ class BadAppleLiveWallpaperService : WallpaperService() {
         override fun onSurfaceDestroyed(holder: SurfaceHolder?) {
             super.onSurfaceDestroyed(holder)
             handler.removeCallbacks(drawRunnable)
+            coroutineScope?.cancel()
+            coroutineScope = null
         }
 
         override fun onVisibilityChanged(visible: Boolean) {
@@ -118,52 +126,48 @@ class BadAppleLiveWallpaperService : WallpaperService() {
             this.yPixelOffset = yPixelOffset
         }
 
-        override fun onSharedPreferenceChanged(
-            sharedPreferences: SharedPreferences?,
-            key: String?
-        ) {
-            fps = getFps()
-            aspect = getAspect()
-            direction = getDirection()
-        }
-
         // フレームを描画する
         private fun drawFrame() {
-            val startDrawTime = System.currentTimeMillis()
+            coroutineScope?.launch {
+                val startDrawTime = System.currentTimeMillis()
 
-            // 画像取得
-            val index = (((startDrawTime - start) / (1000 / 30)) % IMG_MAX_INDEX).toInt()
-            val bitmapIndex = String.format("%1$04d", index)
-            val bitmap = try {
-                resources.assets.open("bad_apple_img/bad_apple_$bitmapIndex.jpg").use {
-                    BitmapFactory.decodeStream(it)
+                // 画像取得
+                val index = (((startDrawTime - start) / (1000 / 30)) % IMG_MAX_INDEX).toInt()
+                val bitmapIndex = String.format("%1$04d", index)
+                val fps = vm.fps.first()
+                val bitmap = try {
+                    resources.assets.open("bad_apple_img/bad_apple_$bitmapIndex.jpg").use {
+                        BitmapFactory.decodeStream(it)
+                    }
+                } catch (e: IOException) {
+                    val endDrawTime = System.currentTimeMillis()
+                    val delay = max(1000L / fps - (endDrawTime - startDrawTime), 10L)
+                    handler.removeCallbacks(drawRunnable)
+                    handler.postDelayed(drawRunnable, delay)
+                    return@launch
                 }
-            } catch (e: IOException) {
+
+                // 画像描画
+                surfaceHolder.lockCanvas()?.let {
+                    drawBitmap(bitmap, it)
+                    surfaceHolder.unlockCanvasAndPost(it)
+                }
+
                 val endDrawTime = System.currentTimeMillis()
                 val delay = max(1000L / fps - (endDrawTime - startDrawTime), 10L)
                 handler.removeCallbacks(drawRunnable)
                 handler.postDelayed(drawRunnable, delay)
-                return
             }
-
-            // 画像描画
-            surfaceHolder.lockCanvas()?.let {
-                drawBitmap(bitmap, it)
-                surfaceHolder.unlockCanvasAndPost(it)
-            }
-
-            val endDrawTime = System.currentTimeMillis()
-            val delay = max(1000L / fps - (endDrawTime - startDrawTime), 10L)
-            handler.removeCallbacks(drawRunnable)
-            handler.postDelayed(drawRunnable, delay)
         }
 
         // 画像を描画する
-        private fun drawBitmap(bitmap: Bitmap, canvas: Canvas) {
+        private suspend fun drawBitmap(bitmap: Bitmap, canvas: Canvas) {
+            val direction = vm.direction.first()
+            val aspect = vm.aspect.first()
             when (direction) {
-                DIRECTION_PORTRAIT -> {
+                BadAppleLiveWallpaperViewModel.DIRECTION_PORTRAIT -> {
                     when (aspect) {
-                        ASPECT_WIDTH -> {
+                        BadAppleLiveWallpaperViewModel.ASPECT_WIDTH -> {
                             val frameWidth = width
                             val frameHeight = width * bitmap.height / bitmap.width
                             canvas.drawColor(Color.BLACK)
@@ -180,7 +184,7 @@ class BadAppleLiveWallpaperService : WallpaperService() {
                             )
                         }
 
-                        ASPECT_HEIGHT -> {
+                        BadAppleLiveWallpaperViewModel.ASPECT_HEIGHT -> {
                             val frameWidth = height * bitmap.width / bitmap.height
                             val frameHeight = height
                             canvas.drawColor(Color.BLACK)
@@ -197,7 +201,7 @@ class BadAppleLiveWallpaperService : WallpaperService() {
                             )
                         }
 
-                        ASPECT_FULL -> {
+                        BadAppleLiveWallpaperViewModel.ASPECT_FULL -> {
                             val frameWidth = width * 2
                             val frameHeight = height
                             canvas.drawColor(Color.BLACK)
@@ -214,13 +218,13 @@ class BadAppleLiveWallpaperService : WallpaperService() {
                             )
                         }
 
-                        ASPECT_FILL -> {
+                        BadAppleLiveWallpaperViewModel.ASPECT_FILL -> {
                             canvas.drawBitmap(bitmap, null, Rect(0, 0, width, height), null)
                         }
                     }
                 }
 
-                DIRECTION_LANDSCAPE -> {
+                BadAppleLiveWallpaperViewModel.DIRECTION_LANDSCAPE -> {
                     val rotateBitmap = Bitmap.createBitmap(
                         bitmap,
                         0,
@@ -232,7 +236,7 @@ class BadAppleLiveWallpaperService : WallpaperService() {
                     )
 
                     when (aspect) {
-                        ASPECT_WIDTH -> {
+                        BadAppleLiveWallpaperViewModel.ASPECT_WIDTH -> {
                             val frameWidth = width
                             val frameHeight = width * rotateBitmap.height / rotateBitmap.width
                             canvas.drawColor(Color.BLACK)
@@ -249,7 +253,7 @@ class BadAppleLiveWallpaperService : WallpaperService() {
                             )
                         }
 
-                        ASPECT_HEIGHT -> {
+                        BadAppleLiveWallpaperViewModel.ASPECT_HEIGHT -> {
                             val frameWidth = height * rotateBitmap.width / rotateBitmap.height
                             val frameHeight = height
                             canvas.drawColor(Color.BLACK)
@@ -266,7 +270,7 @@ class BadAppleLiveWallpaperService : WallpaperService() {
                             )
                         }
 
-                        ASPECT_FULL -> {
+                        BadAppleLiveWallpaperViewModel.ASPECT_FULL -> {
                             val frameWidth = width * 2
                             val frameHeight = height
                             canvas.drawColor(Color.BLACK)
@@ -283,93 +287,17 @@ class BadAppleLiveWallpaperService : WallpaperService() {
                             )
                         }
 
-                        ASPECT_FILL -> {
+                        BadAppleLiveWallpaperViewModel.ASPECT_FILL -> {
                             canvas.drawBitmap(rotateBitmap, null, Rect(0, 0, width, height), null)
                         }
                     }
                 }
             }
         }
-
-        // 共有設定からfpsを取得する
-        private fun getFps(): Int {
-            val fps = try {
-                sharedPreferences.getString(PREF_KEY_FPS, "10")?.toInt() ?: 10
-            } catch (e: NumberFormatException) {
-                sharedPreferences.edit(true) { putString(PREF_KEY_FPS, "10") }
-                10
-            }
-            return when {
-                fps <= 0 -> {
-                    sharedPreferences.edit(true) { putString(PREF_KEY_FPS, "1") }
-                    1
-                }
-
-                fps > 30 -> {
-                    sharedPreferences.edit(true) { putString(PREF_KEY_FPS, "30") }
-                    30
-                }
-
-                else -> {
-                    fps
-                }
-            }
-        }
-
-        // 共有設定からアスペクト比を取得する
-        private fun getAspect(): Int {
-            return sharedPreferences.getString(PREF_KEY_ASPECT, "width")?.let {
-                when (it) {
-                    "width" -> ASPECT_WIDTH
-                    "height" -> ASPECT_HEIGHT
-                    "full" -> ASPECT_FULL
-                    "fill" -> ASPECT_FILL
-                    else -> ASPECT_WIDTH
-                }
-            } ?: ASPECT_WIDTH
-        }
-
-        // 共有設定から向きを取得する
-        private fun getDirection(): Int {
-            return sharedPreferences.getString(PREF_KEY_DIRECTION, "portrait")?.let {
-                when (it) {
-                    "portrait" -> DIRECTION_PORTRAIT
-                    "landscape" -> DIRECTION_LANDSCAPE
-                    else -> DIRECTION_PORTRAIT
-                }
-            } ?: DIRECTION_PORTRAIT
-        }
     }
 
     companion object {
         // 使用する画像の最大要素
         private const val IMG_MAX_INDEX = 6574
-
-        // アスペクト比設定値(横幅に合わせる)
-        private const val ASPECT_WIDTH = 0
-
-        // アスペクト比設定値(縦幅に合わせる)
-        private const val ASPECT_HEIGHT = 1
-
-        // アスペクト比設定値(全画面に合わせる)
-        private const val ASPECT_FULL = 2
-
-        // アスペクト比設定値(表示画面に合わせる)
-        private const val ASPECT_FILL = 3
-
-        // 向き設定値(縦)
-        private const val DIRECTION_PORTRAIT = 0
-
-        // 向き設定値(横)
-        private const val DIRECTION_LANDSCAPE = 1
-
-        // 共有設定キー(fps)
-        private const val PREF_KEY_FPS = "net.lailai.android.badapple.livepaper.fps"
-
-        // 共有設定キー(アスペクト比)
-        private const val PREF_KEY_ASPECT = "net.lailai.android.badapple.livepaper.aspect"
-
-        // 共有設定キー(向き)
-        private const val PREF_KEY_DIRECTION = "net.lailai.android.badapple.livepaper.direction"
     }
 }
