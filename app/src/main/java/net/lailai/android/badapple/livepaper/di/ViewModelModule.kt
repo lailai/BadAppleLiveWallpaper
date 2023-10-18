@@ -7,8 +7,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import net.lailai.android.badapple.livepaper.BadAppleLiveWallpaperViewModel
-import net.lailai.android.badapple.livepaper.PreferenceRepository
+import net.lailai.android.badapple.livepaper.data.PreferenceRepository
+import net.lailai.android.badapple.livepaper.ui.wallpaper.BadAppleLiveWallpaperViewModel
 import javax.inject.Singleton
 
 /**

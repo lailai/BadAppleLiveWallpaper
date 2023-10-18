@@ -1,9 +1,10 @@
 /**
  * Copyright (C) 2023 lailai.
  */
-package net.lailai.android.badapple.livepaper
+package net.lailai.android.badapple.livepaper.ui.wallpaper
 
 import kotlinx.coroutines.flow.map
+import net.lailai.android.badapple.livepaper.data.PreferenceRepository
 
 /**
  * ライブ壁紙のViewModel

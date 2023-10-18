@@ -1,7 +1,7 @@
 /**
  * Copyright (C) 2011-2023 lailai.
  */
-package net.lailai.android.badapple.livepaper
+package net.lailai.android.badapple.livepaper.ui.wallpaper
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory

@@ -9,7 +9,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import net.lailai.android.badapple.livepaper.PreferenceRepository
+import net.lailai.android.badapple.livepaper.data.PreferenceRepository
 import javax.inject.Singleton
 
 /**

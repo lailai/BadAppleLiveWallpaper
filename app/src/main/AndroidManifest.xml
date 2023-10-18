@@ -15,7 +15,7 @@
         android:theme="@style/Theme.BadAppleLiveWallpaper"
         tools:targetApi="33">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,13 +24,13 @@
         </activity>
 
         <activity
-            android:name=".LiveWallpaperSettingsActivity"
+            android:name=".ui.settings.LiveWallpaperSettingsActivity"
             android:exported="true"
             android:label="@string/settings"
             android:theme="@style/WallpaperSettingsTheme" />
 
         <service
-            android:name=".BadAppleLiveWallpaperService"
+            android:name=".ui.wallpaper.BadAppleLiveWallpaperService"
             android:exported="true"
             android:permission="android.permission.BIND_WALLPAPER">
             <intent-filter>

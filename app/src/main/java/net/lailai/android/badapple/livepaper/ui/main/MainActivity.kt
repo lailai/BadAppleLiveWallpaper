@@ -1,7 +1,7 @@
 /**
  * Copyright (C) 2020-2023 lailai.
  */
-package net.lailai.android.badapple.livepaper
+package net.lailai.android.badapple.livepaper.ui.main
 
 import android.app.Dialog
 import android.app.WallpaperManager
@@ -12,6 +12,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
+import net.lailai.android.badapple.livepaper.R
+import net.lailai.android.badapple.livepaper.ui.wallpaper.BadAppleLiveWallpaperService
 
 /**
  * ライブ壁紙設定画面に飛ばすだけのActivity

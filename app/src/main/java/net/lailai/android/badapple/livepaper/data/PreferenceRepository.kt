@@ -1,7 +1,7 @@
 /**
  * Copyright (C) 2023 lailai.
  */
-package net.lailai.android.badapple.livepaper
+package net.lailai.android.badapple.livepaper.data
 
 import android.content.Context
 import android.content.SharedPreferences

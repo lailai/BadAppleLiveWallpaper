@@ -1,10 +1,11 @@
 /**
  * Copyright (C) 2023 lailai.
  */
-package net.lailai.android.badapple.livepaper
+package net.lailai.android.badapple.livepaper.ui.settings
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import net.lailai.android.badapple.livepaper.data.PreferenceRepository
 import javax.inject.Inject
 
 /**
