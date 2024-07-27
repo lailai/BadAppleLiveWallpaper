@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2023 lailai.
+ * Copyright (C) 2011-2024 lailai.
  */
 package net.lailai.android.badapple.livepaper
 
@@ -294,19 +294,19 @@ class BadAppleLiveWallpaperService : WallpaperService() {
         // 共有設定からfpsを取得する
         private fun getFps(): Int {
             val fps = try {
-                sharedPreferences.getString(PREF_KEY_FPS, "10")?.toInt() ?: 10
+                sharedPreferences.getString(Constants.PREF_KEY_FPS, "30")?.toInt() ?: 30
             } catch (e: NumberFormatException) {
-                sharedPreferences.edit(true) { putString(PREF_KEY_FPS, "10") }
-                10
+                sharedPreferences.edit(true) { putString(Constants.PREF_KEY_FPS, "30") }
+                30
             }
             return when {
                 fps <= 0 -> {
-                    sharedPreferences.edit(true) { putString(PREF_KEY_FPS, "1") }
+                    sharedPreferences.edit(true) { putString(Constants.PREF_KEY_FPS, "1") }
                     1
                 }
 
                 fps > 30 -> {
-                    sharedPreferences.edit(true) { putString(PREF_KEY_FPS, "30") }
+                    sharedPreferences.edit(true) { putString(Constants.PREF_KEY_FPS, "30") }
                     30
                 }
 
@@ -318,7 +318,7 @@ class BadAppleLiveWallpaperService : WallpaperService() {
 
         // 共有設定からアスペクト比を取得する
         private fun getAspect(): Int {
-            return sharedPreferences.getString(PREF_KEY_ASPECT, "width")?.let {
+            return sharedPreferences.getString(Constants.PREF_KEY_ASPECT, "width")?.let {
                 when (it) {
                     "width" -> ASPECT_WIDTH
                     "height" -> ASPECT_HEIGHT
@@ -331,7 +331,7 @@ class BadAppleLiveWallpaperService : WallpaperService() {
 
         // 共有設定から向きを取得する
         private fun getDirection(): Int {
-            return sharedPreferences.getString(PREF_KEY_DIRECTION, "portrait")?.let {
+            return sharedPreferences.getString(Constants.PREF_KEY_DIRECTION, "portrait")?.let {
                 when (it) {
                     "portrait" -> DIRECTION_PORTRAIT
                     "landscape" -> DIRECTION_LANDSCAPE
@@ -362,14 +362,5 @@ class BadAppleLiveWallpaperService : WallpaperService() {
 
         // 向き設定値(横)
         private const val DIRECTION_LANDSCAPE = 1
-
-        // 共有設定キー(fps)
-        private const val PREF_KEY_FPS = "net.lailai.android.badapple.livepaper.fps"
-
-        // 共有設定キー(アスペクト比)
-        private const val PREF_KEY_ASPECT = "net.lailai.android.badapple.livepaper.aspect"
-
-        // 共有設定キー(向き)
-        private const val PREF_KEY_DIRECTION = "net.lailai.android.badapple.livepaper.direction"
     }
 }
