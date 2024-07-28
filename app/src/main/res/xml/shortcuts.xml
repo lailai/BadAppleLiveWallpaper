@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:icon="@drawable/ic_settings"
+        android:shortcutId="settings"
+        android:shortcutLongLabel="@string/shortcut_open_settings_long"
+        android:shortcutShortLabel="@string/shortcut_open_settings_short">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="net.lailai.android.badapple.livepaper.MainActivity"
+            android:targetPackage="net.lailai.android.badapple.livepaper">
+            <extra
+                android:name="transition_to"
+                android:value="settings" />
+        </intent>
+    </shortcut>
+</shortcuts>
