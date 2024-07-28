@@ -17,18 +17,22 @@
 
         <activity
             android:name=".MainActivity"
+            android:clearTaskOnLaunch="true"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
         </activity>
 
         <activity
             android:name=".LiveWallpaperSettingsActivity"
             android:exported="true"
-            android:label="@string/settings"
-            android:theme="@style/WallpaperSettingsTheme" />
+            android:label="@string/settings" />
 
         <service
             android:name=".BadAppleLiveWallpaperService"
