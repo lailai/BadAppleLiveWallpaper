@@ -11,4 +11,6 @@
     <string name="fps_summary">1秒当たりのフレーム数を整数値で設定します(お試し機能)。最大30まで設定できますが、そこまでのパフォーマンスはでないかもしれません。</string>
 
     <string name="main_error_message">ライブ壁紙設定画面への遷移に失敗しました。端末設定アプリからライブ壁紙の設定をお試しください。</string>
+    <string name="shortcut_open_settings_short">設定を開く</string>
+    <string name="shortcut_open_settings_long">パラメータ設定画面を直接開きます</string>
 </resources>

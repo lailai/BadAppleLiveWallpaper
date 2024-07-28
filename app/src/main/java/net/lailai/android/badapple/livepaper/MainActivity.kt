@@ -20,7 +20,16 @@ import androidx.fragment.app.DialogFragment
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        openLiveWallpaperSettings()
+        if (intent.extras?.getString("transition_to").isNullOrEmpty()) {
+            openLiveWallpaperSettings()
+        } else {
+            startActivity(
+                Intent(this, LiveWallpaperSettingsActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_MULTIPLE_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                }
+            )
+            finishAndRemoveTask()
+        }
     }
 
     // ライブ壁紙設定画面を開く
