@@ -15,6 +15,10 @@ android {
         versionName = "1.2.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        vectorDrawables {
+            useSupportLibrary = true
+        }
     }
 
     buildTypes {
@@ -27,6 +31,10 @@ android {
         }
     }
 
+    compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+    }
+
     buildFeatures {
         compose = true
     }
@@ -35,8 +43,10 @@ android {
         kotlinCompilerExtensionVersion = "1.5.2"
     }
 
-    compileOptions {
-        isCoreLibraryDesugaringEnabled = true
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
     }
 }
 
@@ -50,8 +60,6 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.fragment.ktx)
-    implementation(libs.androidx.preference.ktx)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui.tooling.preview)
