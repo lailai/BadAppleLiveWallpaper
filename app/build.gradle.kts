@@ -7,6 +7,7 @@ plugins {
 android {
     namespace = "net.lailai.android.badapple.livepaper"
     compileSdk = 35
+    ndkVersion = "27.1.12297006"
 
     defaultConfig {
         applicationId = "net.lailai.android.badapple.livepaper"
@@ -29,6 +30,9 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            ndk {
+                debugSymbolLevel = "FULL"
+            }
         }
     }
 
