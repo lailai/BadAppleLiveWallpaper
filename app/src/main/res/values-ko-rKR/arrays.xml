@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="aspect">
-        <item>Fit to picture</item>
-        <item>Fit to screen</item>
-        <item>Fit to width</item>
-        <item>Fit to height</item>
+        <item>사진에 맞추기</item>
+        <item>화면에 맞추기</item>
+        <item>너비에 맞추기</item>
+        <item>높이에 맞추기</item>
     </string-array>
     <string-array name="aspect_value">
         <item>full</item>
@@ -13,8 +13,8 @@
         <item>height</item>
     </string-array>
     <string-array name="direction">
-        <item>portrait</item>
-        <item>landscape</item>
+        <item>세로</item>
+        <item>수평</item>
     </string-array>
     <string-array name="direction_value">
         <item>portrait</item>

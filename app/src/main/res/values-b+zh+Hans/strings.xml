@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Bad Apple!! Live Wallpaper</string>
+    <string name="description">[東方] Bad Apple!! PV [影画] 作为 Android 的实时壁纸。</string>
+    <string name="settings">设置</string>
+    <string name="back">返回</string>
+    <string name="aspect_title">屏幕尺寸</string>
+    <string name="aspect_summary">设置屏幕尺寸。</string>
+    <string name="direction_title">方向</string>
+    <string name="direction_sumary">设置方向。</string>
+    <string name="fps_title">FPS</string>
+    <string name="fps_summary">将每秒帧数设置为整数（试验函数）。 您可以将帧数设为 30，但性能可能不会那么好。</string>
+
+    <string name="main_error_message">过渡到实时壁纸设置屏幕失败。 请尝试从设备设置应用程序设置实时壁纸。</string>
+    <string name="shortcut_open_settings_short">打开设置。</string>
+    <string name="shortcut_open_settings_long">直接打开参数设置屏幕。</string>
+</resources>
