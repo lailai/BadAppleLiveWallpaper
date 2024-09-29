@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="aspect">
-        <item>Fit to picture</item>
-        <item>Fit to screen</item>
-        <item>Fit to width</item>
-        <item>Fit to height</item>
+        <item>Подходит к фотографии</item>
+        <item>Прилегание к экрану</item>
+        <item>Подгонка по ширине</item>
+        <item>Подгонка по высоте</item>
     </string-array>
     <string-array name="aspect_value">
         <item>full</item>
@@ -13,8 +13,8 @@
         <item>height</item>
     </string-array>
     <string-array name="direction">
-        <item>portrait</item>
-        <item>landscape</item>
+        <item>вертикальный</item>
+        <item>горизонтальность</item>
     </string-array>
     <string-array name="direction_value">
         <item>portrait</item>
