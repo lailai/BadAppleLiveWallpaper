@@ -1,16 +1,16 @@
 <resources>
     <string name="app_name">Bad Apple!! Live Wallpaper</string>
-    <string name="description">【東方】Bad Apple!!　ＰＶ【影絵】をAndroid用のライブ壁紙にしてみた。</string>
-    <string name="settings">設定</string>
-    <string name="back">戻る</string>
-    <string name="aspect_title">画面サイズ</string>
-    <string name="aspect_summary">画面サイズを設定します。</string>
-    <string name="direction_title">向き</string>
-    <string name="direction_sumary">向きを設定します。</string>
+    <string name="description">[Touhou] Bad Apple! PV [Kagee] as a live wallpaper for Android.</string>
+    <string name="settings">Settings</string>
+    <string name="back">Back</string>
+    <string name="aspect_title">Screen size</string>
+    <string name="aspect_summary">Set the screen size.</string>
+    <string name="direction_title">Orientation</string>
+    <string name="direction_sumary">Set the orientation.</string>
     <string name="fps_title">FPS</string>
-    <string name="fps_summary">1秒当たりのフレーム数を整数値で設定します(お試し機能)。最大30まで設定できますが、そこまでのパフォーマンスはでないかもしれません。</string>
+    <string name="fps_summary">Set the number of frames per second as an integer value (trial function). You can set up to 30, but the performance may not be that great.</string>
 
-    <string name="main_error_message">ライブ壁紙設定画面への遷移に失敗しました。端末設定アプリからライブ壁紙の設定をお試しください。</string>
-    <string name="shortcut_open_settings_short">設定を開く</string>
-    <string name="shortcut_open_settings_long">パラメータ設定画面を直接開きます</string>
+    <string name="main_error_message">The transition to the live wallpaper setting screen failed. Please try setting the live wallpaper from the device settings application.</string>
+    <string name="shortcut_open_settings_short">Open settings</string>
+    <string name="shortcut_open_settings_long">Directly opens the parameter setting screen</string>
 </resources>

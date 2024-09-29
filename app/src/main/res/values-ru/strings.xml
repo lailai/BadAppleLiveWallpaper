@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Bad Apple!! Live Wallpaper</string>
+    <string name="description">[Touhou] Bad Apple!! PV [Kagee] в качестве живых обоев для Android.</string>
+    <string name="settings">настройка</string>
+    <string name="back">возврат</string>
+    <string name="aspect_title">размер экрана</string>
+    <string name="aspect_summary">Установите размер экрана.</string>
+    <string name="direction_title">ориентация</string>
+    <string name="direction_sumary">Установите ориентацию.</string>
+    <string name="fps_title">FPS</string>
+    <string name="fps_summary">Задайте количество кадров в секунду в виде целого числа (пробная функция). Вы можете установить значение до 30, но производительность может быть не очень хорошей.</string>
+
+    <string name="main_error_message">Переход к экрану настройки живых обоев не удался. Попробуйте установить живые обои из приложения настроек устройства.</string>
+    <string name="shortcut_open_settings_short">Открыть настройки.</string>
+    <string name="shortcut_open_settings_long">Прямое открытие экрана настройки параметров.</string>
+</resources>
