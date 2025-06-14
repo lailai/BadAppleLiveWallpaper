@@ -133,7 +133,7 @@ class BadAppleLiveWallpaperService : WallpaperService() {
 
             // 画像取得
             val index = (((startDrawTime - start) / (1000 / 30)) % IMG_MAX_INDEX).toInt()
-            val bitmapIndex = String.format("%1$04d", index)
+            val bitmapIndex = "%1$04d".format(index)
             val bitmap = try {
                 resources.assets.open("bad_apple_img/bad_apple_$bitmapIndex.jpg").use {
                     BitmapFactory.decodeStream(it)
