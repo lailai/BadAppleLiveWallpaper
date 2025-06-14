@@ -6,13 +6,13 @@ plugins {
 
 android {
     namespace = "net.lailai.android.badapple.livepaper"
-    compileSdk = 35
+    compileSdk = 36
     ndkVersion = "28.1.13356709"
 
     defaultConfig {
         applicationId = "net.lailai.android.badapple.livepaper"
         minSdk = 26
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 12
         versionName = "1.3.1"
 
