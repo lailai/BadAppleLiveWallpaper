@@ -7,7 +7,6 @@ plugins {
 android {
     namespace = "net.lailai.android.badapple.livepaper"
     compileSdk = 36
-    ndkVersion = "28.1.13356709"
 
     defaultConfig {
         applicationId = "net.lailai.android.badapple.livepaper"
@@ -47,6 +46,9 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+        jniLibs {
+            keepDebugSymbols.addAll(listOf("**/*.so"))
         }
     }
 }
