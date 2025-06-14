@@ -50,6 +50,7 @@ fun App(onBack: () -> Unit = {}) {
 
 @Preview(
     device = Devices.PIXEL,
+    locale = "ja",
     showSystemUi = true,
     showBackground = true,
     uiMode = Configuration.UI_MODE_TYPE_UNDEFINED
