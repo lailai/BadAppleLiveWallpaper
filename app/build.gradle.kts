@@ -7,14 +7,13 @@ plugins {
 android {
     namespace = "net.lailai.android.badapple.livepaper"
     compileSdk = 36
-    ndkVersion = "28.1.13356709"
 
     defaultConfig {
         applicationId = "net.lailai.android.badapple.livepaper"
         minSdk = 26
         targetSdk = 36
-        versionCode = 12
-        versionName = "1.3.1"
+        versionCode = 13
+        versionName = "1.3.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -47,6 +46,9 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+        jniLibs {
+            keepDebugSymbols.addAll(listOf("**/*.so"))
         }
     }
 }
