@@ -104,6 +104,7 @@ fun SingleSelectionDialog(
 
 @Preview(
     device = Devices.PIXEL,
+    locale = "ja",
     showSystemUi = false,
     showBackground = true,
     uiMode = Configuration.UI_MODE_TYPE_UNDEFINED
