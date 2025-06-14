@@ -7,7 +7,7 @@ plugins {
 android {
     namespace = "net.lailai.android.badapple.livepaper"
     compileSdk = 35
-    ndkVersion = "27.1.12297006"
+    ndkVersion = "28.1.13356709"
 
     defaultConfig {
         applicationId = "net.lailai.android.badapple.livepaper"
